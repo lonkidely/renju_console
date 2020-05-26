@@ -1,6 +1,6 @@
 #include "Renju.h"
 
-Renju::Renju() : field(), firstPlayer(HUMAN, WHITE), secondPlayer(BOT, BLACK) {}
+Renju::Renju() : field(), firstPlayer(BOT, WHITE), secondPlayer(BOT, BLACK) {}
 
 void Renju::displayField() {
     field.displayField();
@@ -9,17 +9,21 @@ void Renju::displayField() {
 CellOwner Renju::getWinner() {
     CellOwner winner = EMPTY;
 
-    for (int i = 0; i < field.getFieldSize(); ++i){
-        for (int j = 0; j < field.getFieldSize(); ++j){
+    for (int i = 0; i < field.getFieldSize(); ++i) {
+        for (int j = 0; j < field.getFieldSize(); ++j) {
             if (field.at(i, j) == EMPTY) continue;
 
             //Считаем все возможные отрезки, которые проходят через эту точку
-            Segment horizontal = GameLogic::findSegmentEnds(field, i, j, HORIZONTAL), vertical = GameLogic::findSegmentEnds(field, i, j, VERTICAL),
-                    main_diagonal = GameLogic::findSegmentEnds(field, i, j, MAIN_DIAGONAL), secondary_diagonal = GameLogic::findSegmentEnds(field, i, j, SECONDARY_DIAGONAL);
+            Segment horizontal = GameLogic::findSegmentEnds(field, i, j, HORIZONTAL),
+                    vertical = GameLogic::findSegmentEnds(field, i, j, VERTICAL),
+                    main_diagonal = GameLogic::findSegmentEnds(field, i, j, MAIN_DIAGONAL),
+                    secondary_diagonal = GameLogic::findSegmentEnds(field, i, j, SECONDARY_DIAGONAL);
 
-            if (horizontal.segmentLength() == 5 || vertical.segmentLength() == 5 || main_diagonal.segmentLength() == 5 || secondary_diagonal.segmentLength() == 5) {
-                winner = field.at(i, j);
-                break;
+            //Если есть хотя бы одна пятерка (или длинный ряд в случае белых) - победитель найден
+            if (horizontal.segmentLength() >= 5 || vertical.segmentLength() >= 5
+                || main_diagonal.segmentLength() >= 5 || secondary_diagonal.segmentLength() >= 5) {
+                    winner = field.at(i, j);
+                    break;
             }
         }
     }
@@ -48,6 +52,8 @@ void Renju::play() {
     }
 
     CellOwner winner = getWinner();
+
+    displayField();
 
     switch (winner) {
         case FIRST_PLAYER:

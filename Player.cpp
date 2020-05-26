@@ -1,16 +1,9 @@
 #include "Player.h"
 
-Player::Player() {
-    playerColor = WHITE;
-    playerType = HUMAN;
-    MovesCount = 0;
-}
+Player::Player() : playerColor(WHITE), playerType(HUMAN), movesCount(0) {}
 
-Player::Player(PlayerType _playerType, PlayerColor _playerColor) {
-    playerType = _playerType;
-    playerColor = _playerColor;
-    MovesCount = 0;
-}
+Player::Player(PlayerType _playerType, PlayerColor _playerColor) : playerType(_playerType), playerColor(_playerColor),
+                                                                 movesCount(0) {}
 
 void Player::firstMove(Field &field) {
     field.setCellValue(7, 7, SECOND_PLAYER);
@@ -27,7 +20,7 @@ void Player::secondMove(Field &field) {
     } else {
         cout << "Введите координаты хода\n";
         cin >> x >> y, x--, y--;
-        while (!(GameLogic::isCorrectSecondMove(field, x, y))) {   //первый ход для белых - второй ход для всей игры
+        while (!(GameLogic::isCorrectSecondMove(field, x, y))) {
             cout << "Некорректные координаты, введите другие\n";
             cin >> x >> y, x--, y--;
         }
@@ -55,7 +48,8 @@ void Player::thirdMove(Field &field) {
 void Player::ordinaryMove(Field &field) {
     int x, y;
     if (playerType == BOT) {
-        Cell move = AI::bestMove(field, BLACK);
+        Cell move = AI::bestMove(field, playerColor);
+        if (move.x == -1 || move.y == -1) return;
         x = move.x;
         y = move.y;
     } else {
@@ -70,19 +64,19 @@ void Player::ordinaryMove(Field &field) {
 }
 
 void Player::move(Field &field) {
-    if (MovesCount == 0) {
+    if (movesCount == 0) {
         if (playerColor == BLACK)
             firstMove(field);
         else
             secondMove(field);
-    } else if (MovesCount == 1 && playerColor == BLACK) {
+    } else if (movesCount == 1 && playerColor == BLACK) {
         thirdMove(field);
     } else {
         ordinaryMove(field);
     }
-    MovesCount++;
+    movesCount++;
 }
 
 int Player::getMovesCount() {
-    return MovesCount;
+    return movesCount;
 }
