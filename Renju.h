@@ -1,0 +1,30 @@
+#ifndef RENJU_CONSOLE_RENJU_H
+#define RENJU_CONSOLE_RENJU_H
+
+#include <iomanip>
+#include "Player.h"
+#include "GameLogic.h"
+#include "AI.h"
+#include "Field.h"
+
+
+class Renju {
+private:
+    //само поле
+    Field field;
+
+    //Игроки
+    Player firstPlayer;
+    Player secondPlayer;
+public:
+    Renju();
+
+    void displayField();
+
+    void play();
+
+    CellOwner getWinner();
+};
+
+
+#endif //RENJU_CONSOLE_RENJU_H
