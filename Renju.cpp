@@ -1,6 +1,6 @@
 #include "Renju.h"
 
-Renju::Renju() : field(), firstPlayer(BOT, WHITE), secondPlayer(BOT, BLACK) {}
+Renju::Renju() : field(), firstPlayer(HUMAN, WHITE), secondPlayer(BOT, BLACK) {}
 
 void Renju::displayField() {
     field.displayField();
