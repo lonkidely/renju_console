@@ -52,6 +52,7 @@ int Field::getCountFreeCells() {
 
 void Field::setCellValue(int x, int y, CellOwner value) {
     field[x][y] = value;
+    lastMove = Cell(x, y);
     countFreeCells--;
 }
 
@@ -62,4 +63,8 @@ void Field::eraseCellValue(int x, int y) {
 
 CellOwner &Field::at(int i, int j) {
     return field[i][j];
+}
+
+Cell Field::getLastMove() {
+    return lastMove;
 }

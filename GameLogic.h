@@ -15,16 +15,6 @@ enum PlayerColor : int {
     BLACK
 };
 
-///Ячейка с говорящим названием, вместо pair<int, int>
-struct Cell {
-    int x;
-    int y;
-
-    Cell();
-
-    Cell(int _x, int _y);
-};
-
 ///Перечисление возможных ориентаций отрезка, для удобства
 enum SegmentOrientation : int {
     HORIZONTAL,

@@ -31,9 +31,10 @@ void Player::secondMove(Field &field) {
 void Player::thirdMove(Field &field) {
     int x, y;
     if (playerType == BOT) {
-        Cell move = AI::bestMove(field, BLACK);
-        x = move.x;
-        y = move.y;
+        do {
+            x = rand() % 15;
+            y = rand() % 15;
+        } while (!GameLogic::isCorrectThirdMove(field, x, y));
     } else {
         cout << "Введите координаты хода\n";
         cin >> x >> y, x--, y--;
@@ -48,7 +49,7 @@ void Player::thirdMove(Field &field) {
 void Player::ordinaryMove(Field &field) {
     int x, y;
     if (playerType == BOT) {
-        Cell move = AI::bestMove(field, playerColor);
+        Cell move = AI::bestSmartMove(field, playerColor);
         if (move.x == -1 || move.y == -1) return;
         x = move.x;
         y = move.y;

@@ -7,6 +7,16 @@
 
 using namespace std;
 
+///Ячейка с говорящим названием, вместо pair<int, int>
+struct Cell {
+    int x;
+    int y;
+
+    Cell();
+
+    Cell(int _x, int _y);
+};
+
 ///Перечисление возможных владельцев ячейки: либо ячейка никому не принадлежит, либо принадлежит первому/второму игроку
 enum CellOwner : int {
     EMPTY,
@@ -20,6 +30,7 @@ private:
     static const int FIELD_SIZE = 15;
     int countFreeCells;
     CellOwner field[FIELD_SIZE][FIELD_SIZE];
+    Cell lastMove;
 public:
     Field();
 
@@ -34,6 +45,7 @@ public:
     ///Доступ к ячейке по её координатам
     CellOwner &at(int i, int j);
 
+    Cell getLastMove();
 };
 
 #endif //RENJU_CONSOLE_FIELD_H
